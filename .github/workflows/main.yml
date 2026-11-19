@@ -38,13 +38,17 @@ jobs:
 
         echo "Current Directory: $(pwd)"
 
+        # Ensure AndroidX is enabled
+        echo "android.useAndroidX=true" > gradle.properties
+        echo "android.enableJetifier=true" >> gradle.properties
+
         # Auto-patch build config for SDK deprecations
         sed -i 's/compileSdkVersion/compileSdk/g' app/build.gradle 2>/dev/null || true
         sed -i 's/minSdkVersion/minSdk/g' app/build.gradle 2>/dev/null || true
         sed -i 's/targetSdkVersion/targetSdk/g' app/build.gradle 2>/dev/null || true
 
         # Build debug APK with Gradle
-        gradle assembleDebug --stacktrace
+        gradle assembleDebug -Pandroid.useAndroidX=true -Pandroid.enableJetifier=true --stacktrace
 
     - name: Upload Rchat APK Artifact
       uses: actions/upload-artifact@v4
