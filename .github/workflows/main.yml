@@ -22,16 +22,35 @@ jobs:
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
 
-    - name: Setup Gradle
+    - name: Setup Gradle 8.2
       uses: gradle/actions/setup-gradle@v3
+      with:
+        gradle-version: '8.2'
 
-    - name: Build Android APK with Gradle
+    - name: Auto-Fix Config and Build APK
       run: |
-        cd android
+        # Auto-patch build config
+        find . -name "build.gradle" -exec sed -i 's/compileSdkVersion/compileSdk/g' {} +
+        find . -name "build.gradle" -exec sed -i 's/minSdkVersion/minSdk/g' {} +
+        find . -name "build.gradle" -exec sed -i 's/targetSdkVersion/targetSdk/g' {} +
+
+        # Automatically locate Android directory
+        if [ -d "android" ]; then
+          cd android
+        elif [ -d "rchat/android" ]; then
+          cd rchat/android
+        else
+          DIR=$(dirname $(find . -name "settings.gradle" | head -n 1))
+          cd "$DIR"
+        fi
+        
+        echo "Building inside: $(pwd)"
         gradle assembleDebug --stacktrace
 
     - name: Upload Rchat APK Artifact
       uses: actions/upload-artifact@v4
       with:
         name: Rchat-Sumis.apk
-        path: android/app/build/outputs/apk/debug/*.apk
+        path: |
+          **/build/outputs/apk/debug/*.apk
+          **/*.apk
