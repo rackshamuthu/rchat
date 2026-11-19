@@ -27,6 +27,7 @@ jobs:
 
     - name: Build Android APK
       run: |
+        # Locate the android directory automatically
         if [ -d "rchat/android" ]; then
           cd rchat/android
         elif [ -d "android" ]; then
@@ -37,12 +38,20 @@ jobs:
         fi
 
         echo "Current Directory: $(pwd)"
-        echo "android.useAndroidX=true" >> gradle.properties
-        echo "android.enableJetifier=true" >> gradle.properties
+
+        # Fix leading slashes in index.html inside assets so style.css & app.js load properly
+        find . -name "index.html" -exec sed -i 's|href="/style.css"|href="style.css"|g' {} +
+        find . -name "index.html" -exec sed -i 's|src="/app.js"|src="app.js"|g' {} +
+        find . -name "index.html" -exec sed -i 's|href="/manifest.json"|href="manifest.json"|g' {} +
+        find . -name "index.html" -exec sed -i 's|href="/icon-192.png"|href="icon-192.png"|g' {} +
+        find . -name "index.html" -exec sed -i 's|href="/apple-touch-icon"|href="icon-192.png"|g' {} +
+
+        # Auto-patch build config
         sed -i 's/compileSdkVersion/compileSdk/g' app/build.gradle 2>/dev/null || true
         sed -i 's/minSdkVersion/minSdk/g' app/build.gradle 2>/dev/null || true
         sed -i 's/targetSdkVersion/targetSdk/g' app/build.gradle 2>/dev/null || true
 
+        # Build APK with Gradle 8.5
         gradle assembleDebug --stacktrace
 
     - name: Upload Rchat APK Artifact
