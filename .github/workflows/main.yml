@@ -27,7 +27,6 @@ jobs:
 
     - name: Build Android APK
       run: |
-        # Locate the android directory automatically
         if [ -d "rchat/android" ]; then
           cd rchat/android
         elif [ -d "android" ]; then
@@ -38,13 +37,10 @@ jobs:
         fi
 
         echo "Current Directory: $(pwd)"
-
-        # Auto-patch build config
         sed -i 's/compileSdkVersion/compileSdk/g' app/build.gradle 2>/dev/null || true
         sed -i 's/minSdkVersion/minSdk/g' app/build.gradle 2>/dev/null || true
         sed -i 's/targetSdkVersion/targetSdk/g' app/build.gradle 2>/dev/null || true
 
-        # Build APK with Gradle 8.5
         gradle assembleDebug --stacktrace
 
     - name: Upload Rchat APK Artifact
