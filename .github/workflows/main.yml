@@ -38,6 +38,8 @@ jobs:
         fi
 
         echo "Current Directory: $(pwd)"
+        echo "android.useAndroidX=true" >> gradle.properties
+        echo "android.enableJetifier=true" >> gradle.properties
 
         # Fix leading slashes in index.html inside assets so style.css & app.js load properly
         find . -name "index.html" -exec sed -i 's|href="/style.css"|href="style.css"|g' {} +
