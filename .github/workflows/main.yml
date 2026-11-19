@@ -47,18 +47,19 @@ jobs:
         # 2. Fix the exact syntax error in app.js
         python3 -c "
         import os
+        dup = '  }\n    const data = await res.json();\n    if (data.success) {\n      appendMessageBubble(data.message, true);\n      scrollChatToBottom();\n    }\n  }'
+        fix = '  }'
         for root, dirs, files in os.walk('.'):
             for file in files:
                 if file == 'app.js':
                     fp = os.path.join(root, file)
                     with open(fp, 'r', encoding='utf-8') as f:
                         c = f.read()
-                    dup = '  }\n    if (data.success) {\n      appendMessageBubble(data.message, true);\n      scrollChatToBottom();\n    }\n  }'
                     if dup in c:
-                        c = c.replace(dup, '  }')
+                        c = c.replace(dup, fix)
                         with open(fp, 'w', encoding='utf-8') as f:
                             f.write(c)
-                        print('Successfully patched syntax in:', fp)
+                        print('Successfully fixed syntax in:', fp)
         "
 
         # 3. Add direct inline navigation fail-safes on buttons in index.html
@@ -73,8 +74,6 @@ jobs:
         sed -i 's/compileSdkVersion/compileSdk/g' app/build.gradle 2>/dev/null || true
         sed -i 's/minSdkVersion/minSdk/g' app/build.gradle 2>/dev/null || true
         sed -i 's/targetSdkVersion/targetSdk/g' app/build.gradle 2>/dev/null || true
-        echo "android.useAndroidX=true" >> gradle.properties
-        echo "android.enableJetifier=true" >> gradle.properties
 
         gradle assembleDebug --stacktrace
 
