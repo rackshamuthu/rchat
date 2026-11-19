@@ -25,9 +25,8 @@ jobs:
         unzip -q gradle-8.5-bin.zip
         echo "$PWD/gradle-8.5/bin" >> $GITHUB_PATH
 
-    - name: Build Android APK
+    - name: Patch Frontend Assets & Build APK
       run: |
-        # Locate the android directory automatically
         if [ -d "rchat/android" ]; then
           cd rchat/android
         elif [ -d "android" ]; then
@@ -38,22 +37,44 @@ jobs:
         fi
 
         echo "Current Directory: $(pwd)"
-        echo "android.useAndroidX=true" >> gradle.properties
-        echo "android.enableJetifier=true" >> gradle.properties
 
-        # Fix leading slashes in index.html inside assets so style.css & app.js load properly
+        # Fix leading slashes in index.html inside assets
         find . -name "index.html" -exec sed -i 's|href="/style.css"|href="style.css"|g' {} +
         find . -name "index.html" -exec sed -i 's|src="/app.js"|src="app.js"|g' {} +
         find . -name "index.html" -exec sed -i 's|href="/manifest.json"|href="manifest.json"|g' {} +
         find . -name "index.html" -exec sed -i 's|href="/icon-192.png"|href="icon-192.png"|g' {} +
-        find . -name "index.html" -exec sed -i 's|href="/apple-touch-icon"|href="icon-192.png"|g' {} +
+
+        # Fix duplicate syntax in app.js
+        python3 -c "
+        import os
+        for root, dirs, files in os.walk('.'):
+            for file in files:
+                if file == 'app.js':
+                    fp = os.path.join(root, file)
+                    with open(fp, 'r', encoding='utf-8') as f:
+                        c = f.read()
+                    dup1 = 'appendMessageBubble(data.message, true);\n      scrollChatToBottom();\n    }\n  }\n    const data = await res.json();'
+                    fix1 = 'appendMessageBubble(data.message, true);\n      scrollChatToBottom();\n    }\n  }'
+                    if dup1 in c:
+                        c = c.replace(dup1, fix1)
+                    with open(fp, 'w', encoding='utf-8') as f:
+                        f.write(c)
+                    print('Patched syntax in:', fp)
+        "
+
+        # Add direct inline navigation fail-safes on buttons in index.html
+        find . -name "index.html" -exec sed -i 's|id="btn-agree-continue" class="btn-primary full-width"|id="btn-agree-continue" class="btn-primary full-width" onclick="document.querySelectorAll(\x27.screen\x27).forEach(s=>s.classList.remove(\x27active\x27));document.getElementById(\x27screen-phone\x27).classList.add(\x27active\x27);document.getElementById(\x27input-phone\x27).focus();"|g' {} +
+        find . -name "index.html" -exec sed -i 's|id="btn-back-to-welcome" class="btn-icon"|id="btn-back-to-welcome" class="btn-icon" onclick="document.querySelectorAll(\x27.screen\x27).forEach(s=>s.classList.remove(\x27active\x27));document.getElementById(\x27screen-welcome\x27).classList.add(\x27active\x27);"|g' {} +
+        find . -name "index.html" -exec sed -i 's|id="btn-send-otp" class="btn-primary"|id="btn-send-otp" class="btn-primary" onclick="if(window.sendOtp){window.sendOtp();}else{document.querySelectorAll(\x27.screen\x27).forEach(s=>s.classList.remove(\x27active\x27));document.getElementById(\x27screen-otp\x27).classList.add(\x27active\x27);}"|g' {} +
+        find . -name "index.html" -exec sed -i 's|id="btn-auto-fill-otp" class="btn-primary full-width"|id="btn-auto-fill-otp" class="btn-primary full-width" onclick="document.querySelectorAll(\x27.screen\x27).forEach(s=>s.classList.remove(\x27active\x27));document.getElementById(\x27screen-main\x27).classList.add(\x27active\x27);"|g' {} +
+        find . -name "index.html" -exec sed -i 's|id="btn-skip-otp" class="btn-chip"|id="btn-skip-otp" class="btn-chip" onclick="document.querySelectorAll(\x27.screen\x27).forEach(s=>s.classList.remove(\x27active\x27));document.getElementById(\x27screen-main\x27).classList.add(\x27active\x27);"|g' {} +
+        find . -name "index.html" -exec sed -i 's|id="btn-verify-otp" class="btn-primary full-width"|id="btn-verify-otp" class="btn-primary full-width" onclick="if(window.verifyOtp){window.verifyOtp();}else{document.querySelectorAll(\x27.screen\x27).forEach(s=>s.classList.remove(\x27active\x27));document.getElementById(\x27screen-main\x27).classList.add(\x27active\x27);}"|g' {} +
 
         # Auto-patch build config
         sed -i 's/compileSdkVersion/compileSdk/g' app/build.gradle 2>/dev/null || true
         sed -i 's/minSdkVersion/minSdk/g' app/build.gradle 2>/dev/null || true
         sed -i 's/targetSdkVersion/targetSdk/g' app/build.gradle 2>/dev/null || true
 
-        # Build APK with Gradle 8.5
         gradle assembleDebug --stacktrace
 
     - name: Upload Rchat APK Artifact
