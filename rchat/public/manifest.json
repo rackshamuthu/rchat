@@ -1,0 +1,61 @@
+{
+  "id": "com.sumis.rchat",
+  "name": "Rchat by Sumis",
+  "short_name": "Rchat",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0A4D4A",
+  "theme_color": "#005C53",
+  "description": "Rchat - High Performance Business & Personal Messaging Platform by Sumis",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": ["business", "social", "productivity"],
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-mobile.png",
+      "sizes": "720x1280",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Rchat Mobile Chat Screen"
+    },
+    {
+      "src": "/screenshot-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Rchat Desktop View"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "New Chat",
+      "short_name": "Chat",
+      "description": "Start a new conversation on Rchat",
+      "url": "/?action=new_chat",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Sumis Business Hub",
+      "short_name": "Business",
+      "description": "Open Sumis business catalog and quick replies",
+      "url": "/?action=business",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

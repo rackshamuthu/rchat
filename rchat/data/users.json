@@ -1,0 +1,60 @@
+[
+  {
+    "id": "user_sumis_official",
+    "phone": "9000000001",
+    "name": "Sumis Business Support",
+    "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
+    "about": "Official Customer Care for Sumis & Rchat Services 🛍️",
+    "businessCategory": "Customer Service & Sales",
+    "isBusiness": true,
+    "isVerified": true,
+    "createdAt": "2026-11-19T11:20:23.796Z",
+    "lastSeen": "2026-11-19T11:20:23.799Z"
+  },
+  {
+    "id": "user_alex_partner",
+    "phone": "9876543210",
+    "name": "Alex Johnson (Sample User A)",
+    "avatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80",
+    "about": "Available for business discussions 💼",
+    "businessCategory": "Wholesale Trade",
+    "isBusiness": true,
+    "isVerified": false,
+    "createdAt": "2026-11-19T11:20:23.799Z",
+    "lastSeen": "2026-11-19T11:20:23.799Z"
+  },
+  {
+    "id": "user_priya_partner",
+    "phone": "9123456789",
+    "name": "Priya Sharma (Sample User B)",
+    "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80",
+    "about": "Hey there! I am using Rchat by Sumis ✨",
+    "businessCategory": "Retail Boutique",
+    "isBusiness": true,
+    "isVerified": false,
+    "createdAt": "2026-11-19T11:20:23.799Z",
+    "lastSeen": "2026-11-19T11:20:23.799Z"
+  },
+  {
+    "id": "user_1795088867385",
+    "phone": "8838566210",
+    "name": "racksha muthu",
+    "avatar": "/uploads/upload_1795088877984_xek2dz.png",
+    "about": "Hey there! I am using Rchat by Sumis.",
+    "businessCategory": "General Business",
+    "isBusiness": true,
+    "createdAt": "2026-11-19T11:47:47.385Z",
+    "lastSeen": "2026-11-19T11:47:59.166Z"
+  },
+  {
+    "id": "user_1795088968333",
+    "phone": "9633140283",
+    "name": "Sumithra",
+    "avatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80",
+    "about": "Hey there! I am using Rchat by Sumis.",
+    "businessCategory": "General Business",
+    "isBusiness": true,
+    "createdAt": "2026-11-19T11:49:28.333Z",
+    "lastSeen": "2026-11-19T11:49:32.941Z"
+  }
+]

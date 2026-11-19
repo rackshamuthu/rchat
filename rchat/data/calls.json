@@ -1,0 +1,22 @@
+[
+  {
+    "id": "call_1795089231928",
+    "from": "8838566210",
+    "to": "9633140283",
+    "callerName": "racksha muthu",
+    "callerAvatar": "/uploads/upload_1795088877984_xek2dz.png",
+    "type": "voice",
+    "direction": "outgoing",
+    "timestamp": "2026-11-19T11:53:51.928Z"
+  },
+  {
+    "id": "call_1795089039872",
+    "from": "8838566210",
+    "to": "9633140283",
+    "callerName": "racksha muthu",
+    "callerAvatar": "/uploads/upload_1795088877984_xek2dz.png",
+    "type": "voice",
+    "direction": "outgoing",
+    "timestamp": "2026-11-19T11:50:39.872Z"
+  }
+]

@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Rchat by Sumis</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  <meta name="theme-color" content="#005C53">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="theme-sumis-emerald">
+
+  <!-- Dual-Device / Multi-User Test Switcher Bar (Useful for testing Person A & Person B on 1 PC) -->
+  <div id="test-banner" class="test-banner">
+    <div class="test-banner-content">
+      <span class="badge">TEST MODE</span>
+      <span id="current-user-badge">Not logged in</span>
+      <div class="test-actions">
+        <button id="btn-quick-user-a" class="btn-chip" title="Login as Alex (9876543210)">👤 User A (Alex)</button>
+        <button id="btn-quick-user-b" class="btn-chip" title="Login as Priya (9123456789)">👤 User B (Priya)</button>
+        <button id="btn-open-new-window" class="btn-chip btn-highlight" title="Open 2nd Window to test live chat">⚡ Open User B Window</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="app-container" class="app-container">
+
+    <!-- ========================================== -->
+    <!-- SCREEN 1: SPLASH & WELCOME SCREEN          -->
+    <!-- ========================================== -->
+    <div id="screen-welcome" class="screen active">
+      <div class="welcome-card">
+        <div class="welcome-header">
+          <div class="brand-logo-large">
+            <svg viewBox="0 0 24 24" class="app-icon-svg" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.39 5.07L2 22l5.12-1.34C8.55 21.49 10.22 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.57 0-3.05-.44-4.32-1.2l-.31-.18-3.04.8.81-2.96-.2-.32C4.19 14.88 3.75 13.48 3.75 12c0-4.55 3.7-8.25 8.25-8.25s8.25 3.7 8.25 8.25-3.7 8.25-8.25 8.25zm4.53-6.19c-.25-.13-1.47-.72-1.7-.8-.23-.09-.39-.13-.56.13-.17.25-.65.8-.8 1-.15.19-.3.22-.55.09-.25-.13-1.07-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.38-.44.13-.15.17-.25.25-.42.08-.17.04-.32-.02-.45-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.16 0-.43.06-.66.31-.23.25-.87.85-.87 2.07s.89 2.4 1.02 2.57c.13.17 1.76 2.68 4.26 3.76.6.26 1.06.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.07-.1-.23-.16-.48-.28z"/>
+            </svg>
+          </div>
+          <h1 class="brand-title">Welcome to Rchat</h1>
+          <p class="brand-subtitle">Fast, Secure Business & Personal Messaging</p>
+        </div>
+
+        <div class="welcome-art">
+          <div class="art-circle">
+            <svg viewBox="0 0 24 24" class="art-svg" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
+            </svg>
+          </div>
+        </div>
+
+        <div class="welcome-footer">
+          <p class="terms-text">
+            Read our <a href="#">Privacy Policy</a>. Tap "Agree & Continue" to accept the <a href="#">Terms of Service</a>.
+          </p>
+          <button id="btn-agree-continue" class="btn-primary full-width">AGREE AND CONTINUE</button>
+          <div class="publisher-credit">
+            <span>from</span>
+            <strong>SUMIS</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- SCREEN 2: ENTER MOBILE NUMBER              -->
+    <!-- ========================================== -->
+    <div id="screen-phone" class="screen">
+      <div class="auth-header">
+        <button id="btn-back-to-welcome" class="btn-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        </button>
+        <h2>Enter your phone number</h2>
+        <div class="header-spacer"></div>
+      </div>
+
+      <div class="auth-body">
+        <p class="auth-desc">
+          Rchat will need to verify your phone number. Carrier SMS charges may apply.
+        </p>
+
+        <div class="phone-input-group">
+          <div class="country-picker">
+            <span class="country-name">India</span>
+            <span class="country-code">+91</span>
+          </div>
+          <div class="input-line-wrap">
+            <span class="prefix">+91</span>
+            <input type="tel" id="input-phone" placeholder="98765 43210" maxlength="10" inputmode="numeric">
+          </div>
+        </div>
+
+        <div class="quick-pick-phones">
+          <p class="section-label">Quick select demo phone numbers:</p>
+          <div class="quick-phone-chips">
+            <button class="chip" data-phone="9876543210">9876543210 (Alex / User A)</button>
+            <button class="chip" data-phone="9123456789">9123456789 (Priya / User B)</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="auth-footer">
+        <button id="btn-send-otp" class="btn-primary">NEXT</button>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- SCREEN 3: VERIFY OTP SCREEN                -->
+    <!-- ========================================== -->
+    <div id="screen-otp" class="screen">
+      <div class="auth-header">
+        <button id="btn-back-to-phone" class="btn-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        </button>
+        <h2>Verify your number</h2>
+        <div class="header-spacer"></div>
+      </div>
+
+      <div class="auth-body">
+        <p class="auth-desc">
+          Verification code for <strong id="otp-phone-display">+91 XXXXX XXXXX</strong>.
+          <a href="#" id="link-wrong-number">Wrong number?</a>
+        </p>
+
+        <!-- Highlighted Notice & Instant 1-Tap Auto-Verify -->
+        <div id="otp-helper-card" class="otp-helper-card" style="background:#E2F7F2; border:1px solid #00C49F; border-radius:12px; padding:14px; margin-bottom:20px; width:100%; max-width:340px;">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+            <span style="font-size:20px;">📲</span>
+            <strong style="color:#005C53; font-size:14px;">Instant OTP Code:</strong>
+            <span id="demo-otp-code" style="font-size:18px; font-weight:bold; color:#042F2C; background:#fff; padding:2px 10px; border-radius:6px; letter-spacing:2px;">123456</span>
+          </div>
+          <p style="font-size:11px; color:#54656F; line-height:1.4; margin-bottom:10px;">
+            <em>Note: Real telecom SMS requires an SMS Gateway (Fast2SMS/Twilio). Tap below to instantly verify and enter!</em>
+          </p>
+          <button id="btn-auto-fill-otp" class="btn-primary full-width" style="padding:10px 14px; font-size:13px; background:#005C53;">
+            ⚡ 1-TAP AUTO-VERIFY & LOGIN
+          </button>
+        </div>
+
+        <div class="otp-boxes-wrapper">
+          <input type="text" id="otp-box-1" class="otp-box" maxlength="1" inputmode="numeric">
+          <input type="text" id="otp-box-2" class="otp-box" maxlength="1" inputmode="numeric">
+          <input type="text" id="otp-box-3" class="otp-box" maxlength="1" inputmode="numeric">
+          <span class="otp-separator">-</span>
+          <input type="text" id="otp-box-4" class="otp-box" maxlength="1" inputmode="numeric">
+          <input type="text" id="otp-box-5" class="otp-box" maxlength="1" inputmode="numeric">
+          <input type="text" id="otp-box-6" class="otp-box" maxlength="1" inputmode="numeric">
+        </div>
+
+        <div class="resend-timer-box">
+          <span id="resend-label">Resend code in </span>
+          <span id="resend-countdown">30s</span>
+          <button id="btn-resend-otp" class="btn-text hidden">Resend</button>
+        </div>
+      </div>
+
+      <div class="auth-footer" style="gap:10px; flex-direction:column; align-items:center;">
+        <button id="btn-verify-otp" class="btn-primary full-width">VERIFY CODE</button>
+        <button id="btn-skip-otp" class="btn-chip" style="padding:8px 16px; font-size:12px;">Direct Login (Skip Code)</button>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- SCREEN 4: PROFILE SETUP SCREEN             -->
+    <!-- ========================================== -->
+    <div id="screen-profile" class="screen">
+      <div class="auth-header">
+        <h2>Profile info</h2>
+      </div>
+
+      <div class="auth-body center-content">
+        <p class="auth-desc">Please provide your name and an optional profile photo for Rchat.</p>
+
+        <div class="avatar-picker-wrap">
+          <div id="profile-avatar-preview" class="avatar-large">
+            <img id="profile-avatar-img" src="" alt="Avatar" class="hidden">
+            <span id="profile-avatar-placeholder">👤</span>
+          </div>
+          <button id="btn-pick-avatar" class="btn-camera-float" title="Change photo">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c1.65 0 3-1.35 3-3s-1.35-3-3-3-3 1.35-3 3 1.35 3 3 3zm0-4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm6-1.5V6h-2.17l-.82-1.35A1.97 1.97 0 0013.33 4H10.67c-.64 0-1.24.31-1.68.85L8.17 6H6v.5C4.9 6.5 4 7.4 4 8.5v11c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-11c0-1.1-.9-2-2-2zm0 13H6V9h3.17l1.24-2h3.18l1.24 2H18v8.5z"/></svg>
+          </button>
+          <input type="file" id="file-avatar-input" accept="image/*" class="hidden">
+        </div>
+
+        <div class="profile-input-wrap">
+          <input type="text" id="input-profile-name" placeholder="Type your name here" maxlength="25">
+          <span class="char-count" id="name-char-count">25</span>
+        </div>
+
+        <div class="profile-input-wrap">
+          <input type="text" id="input-business-category" placeholder="Business Name / Category (e.g. Sumis Retail)">
+        </div>
+
+        <div class="profile-input-wrap">
+          <input type="text" id="input-profile-about" placeholder="About / Bio (Hey there! I am using Rchat)">
+        </div>
+      </div>
+
+      <div class="auth-footer">
+        <button id="btn-save-profile" class="btn-primary">NEXT</button>
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- SCREEN 5: MAIN WHATSAPP DASHBOARD          -->
+    <!-- ========================================== -->
+    <div id="screen-main" class="screen">
+      <!-- Main WhatsApp App Bar -->
+      <header class="main-app-bar">
+        <div class="bar-top">
+          <div class="brand-name-wrap">
+            <span class="app-title">Rchat</span>
+            <span class="online-dot" title="Connected"></span>
+          </div>
+          <div class="app-bar-actions">
+            <button id="btn-search-chats" class="btn-bar-icon" title="Search">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            </button>
+            <button id="btn-main-menu" class="btn-bar-icon" title="Menu">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- WhatsApp Inline Search Bar -->
+        <div id="chats-search-bar" class="chats-search-bar hidden">
+          <svg viewBox="0 0 24 24" class="search-bar-svg" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+          <input type="text" id="input-search-chats" placeholder="Search chats by name or number...">
+          <button id="btn-close-search" class="btn-clear-search">✕</button>
+        </div>
+
+        <!-- Dropdown Menu -->
+        <div id="main-dropdown-menu" class="dropdown-menu hidden">
+          <div class="menu-item" id="menu-new-chat">New chat</div>
+          <div class="menu-item" id="menu-business-hub">Business Tools (Sumis)</div>
+          <div class="menu-item" id="menu-settings">Settings</div>
+          <div class="menu-divider"></div>
+          <div class="menu-item" id="menu-switch-user">Switch User / Test Mode</div>
+          <div class="menu-item menu-danger" id="menu-logout">Log out</div>
+        </div>
+
+        <!-- WhatsApp Tab Navigation Bar -->
+        <nav class="whatsapp-tabs">
+          <div class="tab-item tab-community" data-tab="tab-content-community" title="Community / Business">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+          </div>
+          <div class="tab-item active" data-tab="tab-content-chats">
+            <span>Chats</span>
+            <span id="badge-total-unread" class="tab-badge hidden">0</span>
+          </div>
+          <div class="tab-item" data-tab="tab-content-status">
+            <span>Updates</span>
+            <span class="tab-dot"></span>
+          </div>
+          <div class="tab-item" data-tab="tab-content-calls">
+            <span>Calls</span>
+          </div>
+        </nav>
+      </header>
+
+      <!-- Main Tabs Content Container -->
+      <main class="tabs-body">
+
+        <!-- 1. CHATS TAB -->
+        <section id="tab-content-chats" class="tab-page active">
+          <!-- Filter Pills -->
+          <div class="filter-pills-bar">
+            <button class="pill active" data-filter="all">All</button>
+            <button class="pill" data-filter="unread">Unread</button>
+            <button class="pill" data-filter="business">Business</button>
+            <button class="pill" data-filter="groups">Groups</button>
+          </div>
+
+          <!-- Archived Bar -->
+          <div class="archived-banner">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.54 5.23l-1.39-1.68C18.88 3.21 18.47 3 18 3H6c-.47 0-.88.21-1.16.55L3.46 5.23C3.17 5.57 3 6.02 3 6.5V19c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6.5c0-.48-.17-.93-.46-1.27zM6.24 5h11.52l.83 1H5.42l.82-1zM5 19V8h14v11H5zm6-5h2v3h-2zm-3-3h8v2H8z"/></svg>
+            <span>Archived</span>
+          </div>
+
+          <!-- Chat List -->
+          <div id="chats-list" class="chats-list">
+            <!-- Dynamically populated chats -->
+          </div>
+
+          <!-- Empty State -->
+          <div id="chats-empty-state" class="empty-state hidden">
+            <div class="empty-icon">💬</div>
+            <h3>No conversations yet</h3>
+            <p>Tap the green chat button below to start messaging Alex (User A) or Priya (User B)!</p>
+          </div>
+
+          <!-- Floating Action Button: New Chat -->
+          <button id="fab-new-chat" class="fab-whatsapp" title="New Chat">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z"/></svg>
+          </button>
+        </section>
+
+        <!-- 2. STATUS / UPDATES TAB -->
+        <section id="tab-content-status" class="tab-page">
+          <div class="status-section">
+            <div class="status-item my-status" id="item-my-status">
+              <div class="status-avatar-wrap">
+                <img id="my-status-avatar" src="" alt="Me" class="status-avatar">
+                <button id="btn-add-status-circle" class="btn-add-status">+</button>
+              </div>
+              <div class="status-info">
+                <h4>My status</h4>
+                <p>Tap to add status update</p>
+              </div>
+            </div>
+
+            <div class="status-heading">Recent updates</div>
+            <div id="status-updates-list" class="status-list">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+
+          <!-- Floating Status Action Buttons -->
+          <div class="status-fabs">
+            <button id="fab-text-status" class="fab-mini" title="Text Status">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+            </button>
+            <button id="fab-media-status" class="fab-whatsapp" title="Photo Status">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c1.65 0 3-1.35 3-3s-1.35-3-3-3-3 1.35-3 3 1.35 3 3 3zm6-1.5V6h-2.17l-.82-1.35A1.97 1.97 0 0013.33 4H10.67c-.64 0-1.24.31-1.68.85L8.17 6H6v.5C4.9 6.5 4 7.4 4 8.5v11c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-11c0-1.1-.9-2-2-2z"/></svg>
+            </button>
+          </div>
+        </section>
+
+        <!-- 3. CALLS TAB -->
+        <section id="tab-content-calls" class="tab-page">
+          <div class="calls-section">
+            <div class="calls-create-link">
+              <div class="call-icon-wrap link-icon">🔗</div>
+              <div class="call-info">
+                <h4>Create call link</h4>
+                <p>Share a link for your Rchat call</p>
+              </div>
+            </div>
+
+            <div class="status-heading">Recent calls</div>
+            <div id="calls-list" class="calls-list">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+
+          <button id="fab-new-call" class="fab-whatsapp" title="New Call">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57a1.02 1.02 0 00-1.02.24l-2.2 2.2a15.045 15.045 0 01-6.59-6.59l2.2-2.21a.96.96 0 00.25-1A11.36 11.36 0 018.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/></svg>
+          </button>
+        </section>
+
+        <!-- 4. COMMUNITY / BUSINESS TOOLS TAB -->
+        <section id="tab-content-community" class="tab-page">
+          <div class="business-hub">
+            <div class="business-hero">
+              <div class="sumis-badge">SUMIS OFFICIAL BUSINESS HUB</div>
+              <h2>Rchat Business Suite</h2>
+              <p>Everything you need to sell products, manage customer orders, and send quotes directly inside chats.</p>
+            </div>
+
+            <div class="hub-grid">
+              <div class="hub-card" id="card-catalog">
+                <div class="card-icon">🛍️</div>
+                <div class="card-title">Product Catalog</div>
+                <div class="card-desc">Showcase products and services with photos & pricing.</div>
+              </div>
+              <div class="hub-card" id="card-quick-replies">
+                <div class="card-icon">⚡</div>
+                <div class="card-title">Quick Replies</div>
+                <div class="card-desc">Reuse frequent messages like pricing and addresses.</div>
+              </div>
+              <div class="hub-card" id="card-greeting">
+                <div class="card-icon">👋</div>
+                <div class="card-title">Greeting Message</div>
+                <div class="card-desc">Automatically greet customers on first message.</div>
+              </div>
+              <div class="hub-card" id="card-away">
+                <div class="card-icon">🌙</div>
+                <div class="card-title">Away Message</div>
+                <div class="card-desc">Auto-respond when you're out of business hours.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- SCREEN 6: 1-ON-1 CHAT ROOM (FULL SCREEN)   -->
+    <!-- ========================================== -->
+    <div id="screen-chat" class="screen">
+      <!-- Chat Header -->
+      <header class="chat-header">
+        <button id="btn-chat-back" class="btn-chat-nav" title="Back">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        </button>
+        <div class="chat-target-avatar-wrap">
+          <img id="chat-target-avatar" src="" alt="Contact" class="chat-avatar">
+        </div>
+        <div class="chat-target-details" id="chat-target-clickable">
+          <h3 id="chat-target-name">User</h3>
+          <span id="chat-target-status" class="chat-status-text">online</span>
+        </div>
+        <div class="chat-header-actions">
+          <button id="btn-chat-video-call" class="btn-chat-action" title="Video Call">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+          </button>
+          <button id="btn-chat-voice-call" class="btn-chat-action" title="Voice Call">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57a1.02 1.02 0 00-1.02.24l-2.2 2.2a15.045 15.045 0 01-6.59-6.59l2.2-2.21a.96.96 0 00.25-1A11.36 11.36 0 018.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/></svg>
+          </button>
+          <button id="btn-chat-menu" class="btn-chat-action" title="Chat Menu">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Chat Dropdown Menu -->
+      <div id="chat-dropdown-menu" class="dropdown-menu hidden">
+        <div class="menu-item" id="chat-menu-view-contact">View contact</div>
+        <div class="menu-item" id="chat-menu-media">Media, links, and docs</div>
+        <div class="menu-item" id="chat-menu-wallpaper">Wallpaper</div>
+        <div class="menu-divider"></div>
+        <div class="menu-item menu-danger" id="chat-menu-clear">Clear chat</div>
+      </div>
+
+      <!-- Chat Messages Scroll Area with Authentic WhatsApp Doodle Wallpaper -->
+      <div id="chat-messages-container" class="chat-messages-area">
+        <!-- E2E Encryption Banner -->
+        <div class="encryption-notice">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+          <span>Messages and calls are end-to-end encrypted. No one outside of this chat, not even Rchat or Sumis, can read or listen to them.</span>
+        </div>
+
+        <div class="date-chip"><span>TODAY</span></div>
+
+        <!-- Dynamic Message Stream -->
+        <div id="messages-stream"></div>
+      </div>
+
+      <!-- Attachment Tray Modal (WhatsApp 6-Icon Grid) -->
+      <div id="attachment-tray" class="attachment-tray hidden">
+        <div class="tray-grid">
+          <div class="tray-btn-item" id="btn-attach-document">
+            <div class="circle-btn icon-doc">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+            </div>
+            <span>Document</span>
+          </div>
+          <div class="tray-btn-item" id="btn-attach-camera">
+            <div class="circle-btn icon-camera">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c1.65 0 3-1.35 3-3s-1.35-3-3-3-3 1.35-3 3 1.35 3 3 3zm6-1.5V6h-2.17l-.82-1.35A1.97 1.97 0 0013.33 4H10.67c-.64 0-1.24.31-1.68.85L8.17 6H6v.5C4.9 6.5 4 7.4 4 8.5v11c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-11c0-1.1-.9-2-2-2z"/></svg>
+            </div>
+            <span>Camera</span>
+          </div>
+          <div class="tray-btn-item" id="btn-attach-gallery">
+            <div class="circle-btn icon-gallery">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+            </div>
+            <span>Gallery</span>
+          </div>
+          <div class="tray-btn-item" id="btn-attach-audio">
+            <div class="circle-btn icon-audio">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+            </div>
+            <span>Audio</span>
+          </div>
+          <div class="tray-btn-item" id="btn-attach-location">
+            <div class="circle-btn icon-location">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            </div>
+            <span>Location</span>
+          </div>
+          <div class="tray-btn-item" id="btn-attach-contact">
+            <div class="circle-btn icon-contact">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            </div>
+            <span>Contact</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hidden Real File Inputs for Uploads -->
+      <input type="file" id="file-gallery-picker" accept="image/*,video/*" class="hidden">
+      <input type="file" id="file-doc-picker" accept=".pdf,.doc,.docx,.txt,.zip" class="hidden">
+      <input type="file" id="file-audio-picker" accept="audio/*,.mp3,.wav,.ogg" class="hidden">
+
+      <!-- WhatsApp Bottom Input Bar -->
+      <footer class="chat-input-bar">
+        <div class="input-card">
+          <button id="btn-emoji-toggle" class="btn-input-icon" title="Emoji">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/></svg>
+          </button>
+
+          <textarea id="input-message-text" rows="1" placeholder="Message"></textarea>
+
+          <button id="btn-attachment-toggle" class="btn-input-icon" title="Attach">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z"/></svg>
+          </button>
+
+          <button id="btn-quick-camera" class="btn-input-icon" title="Camera">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c1.65 0 3-1.35 3-3s-1.35-3-3-3-3 1.35-3 3 1.35 3 3 3zm6-1.5V6h-2.17l-.82-1.35A1.97 1.97 0 0013.33 4H10.67c-.64 0-1.24.31-1.68.85L8.17 6H6v.5C4.9 6.5 4 7.4 4 8.5v11c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-11c0-1.1-.9-2-2-2z"/></svg>
+          </button>
+        </div>
+
+        <!-- WhatsApp Send / Mic Floating Button -->
+        <button id="btn-chat-send" class="btn-voice-send" title="Send">
+          <svg id="icon-mic" viewBox="0 0 24 24" fill="currentColor"><path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/></svg>
+          <svg id="icon-send" viewBox="0 0 24 24" fill="currentColor" class="hidden"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+        </button>
+      </footer>
+    </div>
+
+  </div> <!-- /#app-container -->
+
+  <!-- ========================================== -->
+  <!-- MODAL: NEW CHAT / CONTACT PICKER           -->
+  <!-- ========================================== -->
+  <div id="modal-new-chat" class="modal-overlay hidden">
+    <div class="modal-sheet">
+      <div class="sheet-header">
+        <button id="btn-close-new-chat" class="btn-sheet-close">✕</button>
+        <h3>Select contact</h3>
+      </div>
+      <div class="sheet-body">
+        <div class="direct-number-box">
+          <label>Chat directly with any mobile number:</label>
+          <div class="input-phone-direct">
+            <span>+91</span>
+            <input type="tel" id="input-direct-phone" placeholder="Enter 10-digit number" maxlength="10">
+            <button id="btn-start-direct-chat" class="btn-chip btn-highlight">START CHAT</button>
+          </div>
+        </div>
+
+        <div class="contacts-list-heading">REGISTERED CONTACTS ON RCHAT</div>
+        <div id="modal-contacts-list" class="contacts-list">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: SETTINGS                            -->
+  <!-- ========================================== -->
+  <div id="modal-settings" class="modal-overlay hidden">
+    <div class="modal-sheet">
+      <div class="sheet-header">
+        <button id="btn-close-settings" class="btn-sheet-close">✕</button>
+        <h3>Settings</h3>
+      </div>
+      <div class="sheet-body">
+        <div class="settings-user-card" id="settings-profile-btn">
+          <img id="settings-avatar-img" src="" alt="Profile" class="avatar-medium">
+          <div class="settings-user-info">
+            <h4 id="settings-name-display">Alex</h4>
+            <p id="settings-about-display">Available</p>
+          </div>
+          <div class="qr-icon">📱</div>
+        </div>
+
+        <div class="settings-group">
+          <div class="settings-title">Appearance & Theme</div>
+          <div class="theme-picker-row">
+            <button class="theme-dot dot-sumis active" data-theme="theme-sumis-emerald" title="Sumis Emerald"></button>
+            <button class="theme-dot dot-midnight" data-theme="theme-midnight-teal" title="Midnight Teal"></button>
+            <button class="theme-dot dot-indigo" data-theme="theme-royal-indigo" title="Royal Indigo"></button>
+            <button class="theme-dot dot-classic" data-theme="theme-classic-green" title="WhatsApp Classic Green"></button>
+          </div>
+        </div>
+
+        <div class="settings-item" id="opt-sound-toggle">
+          <span class="item-icon">🔔</span>
+          <div class="item-text">
+            <h4>Notification Sounds</h4>
+            <p>Play tone for incoming messages and ticks</p>
+          </div>
+          <input type="checkbox" id="chk-sound" checked>
+        </div>
+
+        <div class="settings-item" id="opt-business-profile">
+          <span class="item-icon">💼</span>
+          <div class="item-text">
+            <h4>Business Profile</h4>
+            <p>Edit company details, hours, and catalog</p>
+          </div>
+        </div>
+
+        <div class="settings-footer-info">
+          <strong>Rchat v1.0.0 (Native Android & PWA)</strong>
+          <p>Publisher: <span>Sumis</span></p>
+          <p>End-to-End Encrypted Messaging</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: MEDIA VIEWER (LIGHTBOX)             -->
+  <!-- ========================================== -->
+  <div id="modal-lightbox" class="modal-overlay hidden">
+    <div class="lightbox-viewer">
+      <div class="lightbox-header">
+        <button id="btn-close-lightbox" class="btn-sheet-close">✕</button>
+        <span id="lightbox-title">Photo</span>
+        <a id="lightbox-download" href="#" download class="btn-sheet-close">⬇️</a>
+      </div>
+      <div class="lightbox-body">
+        <img id="lightbox-img" src="" alt="Full view">
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: CALLING SIMULATION SCREEN           -->
+  <!-- ========================================== -->
+  <div id="modal-call-screen" class="modal-overlay hidden">
+    <div class="call-dialog">
+      <div class="call-caller-avatar">
+        <img id="call-avatar" src="" alt="Caller">
+      </div>
+      <h2 id="call-name">Alex</h2>
+      <p id="call-status">Rchat Audio Call • Ringing...</p>
+
+      <div class="call-controls">
+        <button class="btn-call-circle btn-mute" title="Mute">🎤</button>
+        <button class="btn-call-circle btn-speaker" title="Speaker">🔊</button>
+        <button id="btn-end-call" class="btn-call-circle btn-end" title="End Call">📞</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audio elements for pleasant WhatsApp sound effects -->
+  <audio id="sound-message-send" preload="auto" src="data:audio/wav;base64,UklGRjIAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YRAAAAAAAP///////////////////wAA"></audio>
+
+  <script src="/app.js"></script>
+</body>
+</html>

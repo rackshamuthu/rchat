@@ -1,0 +1,12 @@
+{
+  "name": "rchat",
+  "version": "1.0.0",
+  "description": "Rchat - High-Performance WhatsApp Re-engineered Mobile & Web Application by Sumis",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "author": "Sumis",
+  "license": "ISC"
+}
