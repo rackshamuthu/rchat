@@ -73,6 +73,8 @@ jobs:
         sed -i 's/compileSdkVersion/compileSdk/g' app/build.gradle 2>/dev/null || true
         sed -i 's/minSdkVersion/minSdk/g' app/build.gradle 2>/dev/null || true
         sed -i 's/targetSdkVersion/targetSdk/g' app/build.gradle 2>/dev/null || true
+        echo "android.useAndroidX=true" >> gradle.properties
+        echo "android.enableJetifier=true" >> gradle.properties
 
         gradle assembleDebug --stacktrace
 
