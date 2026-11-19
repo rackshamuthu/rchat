@@ -4,28 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Rchat by Sumis</title>
-  <link rel="manifest" href="/manifest.json">
-  <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
-  <link rel="apple-touch-icon" href="/icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+  <link rel="apple-touch-icon" href="icon-192.png">
   <meta name="theme-color" content="#005C53">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body class="theme-sumis-emerald">
-
-  <!-- Dual-Device / Multi-User Test Switcher Bar (Useful for testing Person A & Person B on 1 PC) -->
-  <div id="test-banner" class="test-banner">
-    <div class="test-banner-content">
-      <span class="badge">TEST MODE</span>
-      <span id="current-user-badge">Not logged in</span>
-      <div class="test-actions">
-        <button id="btn-quick-user-a" class="btn-chip" title="Login as Alex (9876543210)">👤 User A (Alex)</button>
-        <button id="btn-quick-user-b" class="btn-chip" title="Login as Priya (9123456789)">👤 User B (Priya)</button>
-        <button id="btn-open-new-window" class="btn-chip btn-highlight" title="Open 2nd Window to test live chat">⚡ Open User B Window</button>
-      </div>
-    </div>
-  </div>
 
   <div id="app-container" class="app-container">
 
@@ -41,7 +28,7 @@
             </svg>
           </div>
           <h1 class="brand-title">Welcome to Rchat</h1>
-          <p class="brand-subtitle">Fast, Secure Business & Personal Messaging</p>
+          <p class="brand-subtitle">Simple. Reliable. Private.</p>
         </div>
 
         <div class="welcome-art">
@@ -56,7 +43,7 @@
           <p class="terms-text">
             Read our <a href="#">Privacy Policy</a>. Tap "Agree & Continue" to accept the <a href="#">Terms of Service</a>.
           </p>
-          <button id="btn-agree-continue" class="btn-primary full-width">AGREE AND CONTINUE</button>
+          <button id="btn-agree-continue" class="btn-primary full-width" onclick="window.goToPhoneScreen()">AGREE AND CONTINUE</button>
           <div class="publisher-credit">
             <span>from</span>
             <strong>SUMIS</strong>
@@ -70,40 +57,34 @@
     <!-- ========================================== -->
     <div id="screen-phone" class="screen">
       <div class="auth-header">
-        <button id="btn-back-to-welcome" class="btn-icon">
+        <button id="btn-back-to-welcome" class="btn-icon" onclick="window.goToWelcomeScreen()">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
         </button>
         <h2>Enter your phone number</h2>
-        <div class="header-spacer"></div>
+        <div class="header-menu-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+        </div>
       </div>
 
       <div class="auth-body">
         <p class="auth-desc">
-          Rchat will need to verify your phone number. Carrier SMS charges may apply.
+          Rchat will need to verify your phone number. Carrier SMS charges may apply. <a href="#">What's my number?</a>
         </p>
 
         <div class="phone-input-group">
           <div class="country-picker">
             <span class="country-name">India</span>
-            <span class="country-code">+91</span>
+            <span class="country-code">▼</span>
           </div>
           <div class="input-line-wrap">
             <span class="prefix">+91</span>
-            <input type="tel" id="input-phone" placeholder="98765 43210" maxlength="10" inputmode="numeric">
-          </div>
-        </div>
-
-        <div class="quick-pick-phones">
-          <p class="section-label">Quick select demo phone numbers:</p>
-          <div class="quick-phone-chips">
-            <button class="chip" data-phone="9876543210">9876543210 (Alex / User A)</button>
-            <button class="chip" data-phone="9123456789">9123456789 (Priya / User B)</button>
+            <input type="tel" id="input-phone" placeholder="Phone number" maxlength="10" inputmode="numeric">
           </div>
         </div>
       </div>
 
       <div class="auth-footer">
-        <button id="btn-send-otp" class="btn-primary">NEXT</button>
+        <button id="btn-send-otp" class="btn-primary" onclick="window.triggerSendOtp()">NEXT</button>
       </div>
     </div>
 
@@ -112,33 +93,29 @@
     <!-- ========================================== -->
     <div id="screen-otp" class="screen">
       <div class="auth-header">
-        <button id="btn-back-to-phone" class="btn-icon">
+        <button id="btn-back-to-phone" class="btn-icon" onclick="window.goToPhoneScreen()">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
         </button>
-        <h2>Verify your number</h2>
-        <div class="header-spacer"></div>
+        <h2>Verifying your number</h2>
+        <div class="header-menu-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+        </div>
       </div>
 
       <div class="auth-body">
+        <!-- Floating simulated incoming SMS notification heads-up banner -->
+        <div id="sms-notification-banner" class="sms-notification-banner hidden">
+          <div class="sms-banner-icon">💬</div>
+          <div class="sms-banner-body">
+            <div class="sms-banner-title">Messages • now</div>
+            <div class="sms-banner-msg">&lt;#&gt; <strong id="sms-code-preview">482910</strong> is your Rchat verification code.</div>
+          </div>
+        </div>
+
         <p class="auth-desc">
-          Verification code for <strong id="otp-phone-display">+91 XXXXX XXXXX</strong>.
+          Waiting to automatically detect an SMS sent to <strong id="otp-phone-display">+91 XXXXX XXXXX</strong>.
           <a href="#" id="link-wrong-number">Wrong number?</a>
         </p>
-
-        <!-- Highlighted Notice & Instant 1-Tap Auto-Verify -->
-        <div id="otp-helper-card" class="otp-helper-card" style="background:#E2F7F2; border:1px solid #00C49F; border-radius:12px; padding:14px; margin-bottom:20px; width:100%; max-width:340px;">
-          <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
-            <span style="font-size:20px;">📲</span>
-            <strong style="color:#005C53; font-size:14px;">Instant OTP Code:</strong>
-            <span id="demo-otp-code" style="font-size:18px; font-weight:bold; color:#042F2C; background:#fff; padding:2px 10px; border-radius:6px; letter-spacing:2px;">123456</span>
-          </div>
-          <p style="font-size:11px; color:#54656F; line-height:1.4; margin-bottom:10px;">
-            <em>Note: Real telecom SMS requires an SMS Gateway (Fast2SMS/Twilio). Tap below to instantly verify and enter!</em>
-          </p>
-          <button id="btn-auto-fill-otp" class="btn-primary full-width" style="padding:10px 14px; font-size:13px; background:#005C53;">
-            ⚡ 1-TAP AUTO-VERIFY & LOGIN
-          </button>
-        </div>
 
         <div class="otp-boxes-wrapper">
           <input type="text" id="otp-box-1" class="otp-box" maxlength="1" inputmode="numeric">
@@ -150,16 +127,27 @@
           <input type="text" id="otp-box-6" class="otp-box" maxlength="1" inputmode="numeric">
         </div>
 
-        <div class="resend-timer-box">
-          <span id="resend-label">Resend code in </span>
-          <span id="resend-countdown">30s</span>
-          <button id="btn-resend-otp" class="btn-text hidden">Resend</button>
-        </div>
-      </div>
+        <p class="otp-sub-help">Enter 6-digit code</p>
 
-      <div class="auth-footer" style="gap:10px; flex-direction:column; align-items:center;">
-        <button id="btn-verify-otp" class="btn-primary full-width">VERIFY CODE</button>
-        <button id="btn-skip-otp" class="btn-chip" style="padding:8px 16px; font-size:12px;">Direct Login (Skip Code)</button>
+        <div class="resend-timer-box">
+          <div class="resend-row">
+            <span class="resend-icon">💬</span>
+            <span id="resend-label">Resend SMS in </span>
+            <span id="resend-countdown">0:30</span>
+            <button id="btn-resend-otp" class="btn-text hidden">Resend SMS</button>
+          </div>
+          <div class="resend-row call-row">
+            <span class="resend-icon">📞</span>
+            <span>Call me in </span>
+            <span id="call-countdown">1:58</span>
+          </div>
+        </div>
+
+        <!-- WhatsApp Circular Verifying Spinner -->
+        <div id="otp-verifying-spinner" class="otp-verifying-spinner hidden">
+          <div class="whatsapp-spinner"></div>
+          <span>Verifying...</span>
+        </div>
       </div>
     </div>
 
@@ -191,16 +179,12 @@
         </div>
 
         <div class="profile-input-wrap">
-          <input type="text" id="input-business-category" placeholder="Business Name / Category (e.g. Sumis Retail)">
-        </div>
-
-        <div class="profile-input-wrap">
-          <input type="text" id="input-profile-about" placeholder="About / Bio (Hey there! I am using Rchat)">
+          <input type="text" id="input-profile-about" placeholder="About / Bio (Hey there! I am using Rchat)" value="Hey there! I am using Rchat.">
         </div>
       </div>
 
       <div class="auth-footer">
-        <button id="btn-save-profile" class="btn-primary">NEXT</button>
+        <button id="btn-save-profile" class="btn-primary" onclick="window.triggerSaveProfile()">NEXT</button>
       </div>
     </div>
 
@@ -228,23 +212,23 @@
         <!-- WhatsApp Inline Search Bar -->
         <div id="chats-search-bar" class="chats-search-bar hidden">
           <svg viewBox="0 0 24 24" class="search-bar-svg" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-          <input type="text" id="input-search-chats" placeholder="Search chats by name or number...">
+          <input type="text" id="input-search-chats" placeholder="Search...">
           <button id="btn-close-search" class="btn-clear-search">✕</button>
         </div>
 
         <!-- Dropdown Menu -->
         <div id="main-dropdown-menu" class="dropdown-menu hidden">
           <div class="menu-item" id="menu-new-chat">New chat</div>
-          <div class="menu-item" id="menu-business-hub">Business Tools (Sumis)</div>
+          <div class="menu-item" id="menu-profile-direct">Profile</div>
+          <div class="menu-item" id="menu-business-hub">Business Tools</div>
           <div class="menu-item" id="menu-settings">Settings</div>
           <div class="menu-divider"></div>
-          <div class="menu-item" id="menu-switch-user">Switch User / Test Mode</div>
           <div class="menu-item menu-danger" id="menu-logout">Log out</div>
         </div>
 
         <!-- WhatsApp Tab Navigation Bar -->
         <nav class="whatsapp-tabs">
-          <div class="tab-item tab-community" data-tab="tab-content-community" title="Community / Business">
+          <div class="tab-item tab-community" data-tab="tab-content-community" title="Communities / Business">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
           </div>
           <div class="tab-item active" data-tab="tab-content-chats">
@@ -270,7 +254,7 @@
           <div class="filter-pills-bar">
             <button class="pill active" data-filter="all">All</button>
             <button class="pill" data-filter="unread">Unread</button>
-            <button class="pill" data-filter="business">Business</button>
+            <button class="pill" data-filter="business">Favourites</button>
             <button class="pill" data-filter="groups">Groups</button>
           </div>
 
@@ -289,7 +273,7 @@
           <div id="chats-empty-state" class="empty-state hidden">
             <div class="empty-icon">💬</div>
             <h3>No conversations yet</h3>
-            <p>Tap the green chat button below to start messaging Alex (User A) or Priya (User B)!</p>
+            <p>Tap the green chat button below to start messaging contacts!</p>
           </div>
 
           <!-- Floating Action Button: New Chat -->
@@ -355,9 +339,9 @@
         <section id="tab-content-community" class="tab-page">
           <div class="business-hub">
             <div class="business-hero">
-              <div class="sumis-badge">SUMIS OFFICIAL BUSINESS HUB</div>
+              <div class="sumis-badge">SUMIS BUSINESS SUITE</div>
               <h2>Rchat Business Suite</h2>
-              <p>Everything you need to sell products, manage customer orders, and send quotes directly inside chats.</p>
+              <p>Everything you need to showcase products, connect with customers, and manage requests.</p>
             </div>
 
             <div class="hub-grid">
@@ -513,7 +497,224 @@
       </footer>
     </div>
 
+    <!-- ========================================== -->
+    <!-- SCREEN 7: WHATSAPP USER PROFILE SCREEN     -->
+    <!-- ========================================== -->
+    <div id="screen-user-profile" class="screen">
+      <div class="auth-header">
+        <button id="btn-profile-back" class="btn-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        </button>
+        <h2>Profile</h2>
+        <div class="header-spacer"></div>
+      </div>
+
+      <div class="profile-view-body">
+        <div class="profile-avatar-center-wrap">
+          <div class="profile-avatar-big-circle">
+            <img id="view-profile-avatar-img" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=300&q=80" alt="Avatar">
+          </div>
+          <button id="btn-profile-camera-edit" class="btn-camera-float-profile" title="Change photo">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c1.65 0 3-1.35 3-3s-1.35-3-3-3-3 1.35-3 3 1.35 3 3 3zm6-1.5V6h-2.17l-.82-1.35A1.97 1.97 0 0013.33 4H10.67c-.64 0-1.24.31-1.68.85L8.17 6H6v.5C4.9 6.5 4 7.4 4 8.5v11c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-11c0-1.1-.9-2-2-2z"/></svg>
+          </button>
+        </div>
+
+        <div class="profile-card-group">
+          <!-- Name Section -->
+          <div class="profile-card-row" id="row-profile-name">
+            <div class="profile-card-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            </div>
+            <div class="profile-card-details">
+              <span class="label">Name</span>
+              <span class="value" id="view-profile-name-text">Alex Johnson</span>
+              <p class="caption">This is not your username or pin. This name will be visible to your Rchat contacts.</p>
+            </div>
+            <button class="btn-pencil" id="btn-edit-name-pencil" title="Edit name">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+            </button>
+          </div>
+
+          <!-- About Section -->
+          <div class="profile-card-row" id="row-profile-about">
+            <div class="profile-card-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"/></svg>
+            </div>
+            <div class="profile-card-details">
+              <span class="label">About</span>
+              <span class="value" id="view-profile-about-text">Hey there! I am using Rchat.</span>
+            </div>
+            <button class="btn-pencil" id="btn-edit-about-pencil" title="Edit status">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+            </button>
+          </div>
+
+          <!-- Phone Section -->
+          <div class="profile-card-row">
+            <div class="profile-card-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.43-3.9-6.8-6.72l1.97-1.61c.29-.26.37-.65.26-1.02A11.36 11.36 0 018.78 4c0-.55-.45-1-1-1H4.11c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.62c0-.55-.45-1-1-1z"/></svg>
+            </div>
+            <div class="profile-card-details">
+              <span class="label">Phone</span>
+              <span class="value" id="view-profile-phone-text">+91 98765 43210</span>
+            </div>
+            <div class="profile-lock-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div> <!-- /#app-container -->
+
+  <!-- ========================================== -->
+  <!-- MODAL: PHONE NUMBER CONFIRMATION DIALOG    -->
+  <!-- ========================================== -->
+  <div id="modal-phone-confirm" class="modal-overlay hidden">
+    <div class="whatsapp-dialog">
+      <div class="dialog-content">
+        <p class="dialog-text">We will be verifying the phone number:</p>
+        <p class="dialog-phone" id="dialog-confirm-phone">+91 98765 43210</p>
+        <p class="dialog-subtext">Is this OK, or would you like to edit the number?</p>
+      </div>
+      <div class="dialog-actions">
+        <button type="button" id="btn-dialog-edit" class="btn-dialog">EDIT</button>
+        <button type="button" id="btn-dialog-ok" class="btn-dialog btn-dialog-primary">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: INITIALIZING SPINNER DIALOG         -->
+  <!-- ========================================== -->
+  <div id="modal-initializing" class="modal-overlay hidden">
+    <div class="init-dialog">
+      <div class="whatsapp-spinner large"></div>
+      <h3>Initializing...</h3>
+      <p>Please wait a moment</p>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: EDIT NAME DIALOG                    -->
+  <!-- ========================================== -->
+  <div id="modal-edit-name" class="modal-overlay hidden">
+    <div class="whatsapp-dialog">
+      <h3>Enter your name</h3>
+      <div class="dialog-input-wrap">
+        <input type="text" id="input-edit-name-val" maxlength="25" placeholder="Your name">
+        <span class="char-count" id="edit-name-counter">25</span>
+      </div>
+      <div class="dialog-actions">
+        <button id="btn-cancel-edit-name" class="btn-dialog">CANCEL</button>
+        <button id="btn-save-edit-name" class="btn-dialog btn-dialog-primary">SAVE</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: EDIT ABOUT / STATUS SHEET           -->
+  <!-- ========================================== -->
+  <div id="modal-edit-about" class="modal-overlay hidden">
+    <div class="modal-sheet">
+      <div class="sheet-header">
+        <button id="btn-close-about-sheet" class="btn-sheet-close">✕</button>
+        <h3>About</h3>
+      </div>
+      <div class="sheet-body">
+        <div class="about-current-section">
+          <label class="about-sub-title">Currently set to</label>
+          <div class="about-custom-input-wrap">
+            <input type="text" id="input-custom-about-text" maxlength="139" placeholder="Add an about status...">
+            <button id="btn-save-custom-about" class="btn-chip btn-highlight">Save</button>
+          </div>
+        </div>
+
+        <div class="about-sub-title" style="margin-top:16px;">SELECT YOUR ABOUT</div>
+        <div class="about-presets-list" id="about-presets-list">
+          <div class="about-preset-row" data-text="Available">
+            <span>Available</span>
+            <span class="preset-tick">✓</span>
+          </div>
+          <div class="about-preset-row" data-text="Busy">
+            <span>Busy</span>
+            <span class="preset-tick">✓</span>
+          </div>
+          <div class="about-preset-row" data-text="At school">
+            <span>At school</span>
+            <span class="preset-tick">✓</span>
+          </div>
+          <div class="about-preset-row" data-text="At the movies">
+            <span>At the movies</span>
+            <span class="preset-tick">✓</span>
+          </div>
+          <div class="about-preset-row" data-text="At work">
+            <span>At work</span>
+            <span class="preset-tick">✓</span>
+          </div>
+          <div class="about-preset-row" data-text="Battery about to die">
+            <span>Battery about to die</span>
+            <span class="preset-tick">✓</span>
+          </div>
+          <div class="about-preset-row" data-text="Can't talk, Rchat only">
+            <span>Can't talk, Rchat only</span>
+            <span class="preset-tick">✓</span>
+          </div>
+          <div class="about-preset-row" data-text="In a meeting">
+            <span>In a meeting</span>
+            <span class="preset-tick">✓</span>
+          </div>
+          <div class="about-preset-row" data-text="At the gym">
+            <span>At the gym</span>
+            <span class="preset-tick">✓</span>
+          </div>
+          <div class="about-preset-row" data-text="Sleeping">
+            <span>Sleeping</span>
+            <span class="preset-tick">✓</span>
+          </div>
+          <div class="about-preset-row" data-text="Urgent calls only">
+            <span>Urgent calls only</span>
+            <span class="preset-tick">✓</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: EDIT AVATAR PHOTO SHEET             -->
+  <!-- ========================================== -->
+  <div id="modal-edit-avatar" class="modal-overlay hidden">
+    <div class="modal-sheet">
+      <div class="sheet-header">
+        <button id="btn-close-avatar-sheet" class="btn-sheet-close">✕</button>
+        <h3>Profile photo</h3>
+      </div>
+      <div class="sheet-body">
+        <div class="avatar-action-row">
+          <button id="opt-avatar-upload-file" class="avatar-act-btn">
+            <span class="act-icon">📷</span>
+            <span>Upload Photo / Camera</span>
+          </button>
+          <button id="opt-avatar-remove-file" class="avatar-act-btn">
+            <span class="act-icon">🗑️</span>
+            <span>Remove Photo</span>
+          </button>
+        </div>
+
+        <div class="about-sub-title" style="margin-top:16px;">OR CHOOSE AN AVATAR</div>
+        <div class="avatar-grid-list" id="avatar-grid-list">
+          <img class="avatar-grid-thumb" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80" alt="Avatar 1">
+          <img class="avatar-grid-thumb" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80" alt="Avatar 2">
+          <img class="avatar-grid-thumb" src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=200&q=80" alt="Avatar 3">
+          <img class="avatar-grid-thumb" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=200&q=80" alt="Avatar 4">
+          <img class="avatar-grid-thumb" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80" alt="Avatar 5">
+          <img class="avatar-grid-thumb" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80" alt="Avatar 6">
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- ========================================== -->
   <!-- MODAL: NEW CHAT / CONTACT PICKER           -->
@@ -534,7 +735,7 @@
           </div>
         </div>
 
-        <div class="contacts-list-heading">REGISTERED CONTACTS ON RCHAT</div>
+        <div class="contacts-list-heading">CONTACTS ON RCHAT</div>
         <div id="modal-contacts-list" class="contacts-list">
           <!-- Populated dynamically -->
         </div>
@@ -552,6 +753,7 @@
         <h3>Settings</h3>
       </div>
       <div class="sheet-body">
+        <!-- Settings Profile Card (Tap to open full Profile Editor) -->
         <div class="settings-user-card" id="settings-profile-btn">
           <img id="settings-avatar-img" src="" alt="Profile" class="avatar-medium">
           <div class="settings-user-info">
@@ -589,8 +791,7 @@
         </div>
 
         <div class="settings-footer-info">
-          <strong>Rchat v1.0.0 (Native Android & PWA)</strong>
-          <p>Publisher: <span>Sumis</span></p>
+          <strong>Rchat v2.0 (Publisher: Sumis)</strong>
           <p>End-to-End Encrypted Messaging</p>
         </div>
       </div>
@@ -635,6 +836,6 @@
   <!-- Audio elements for pleasant WhatsApp sound effects -->
   <audio id="sound-message-send" preload="auto" src="data:audio/wav;base64,UklGRjIAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YRAAAAAAAP///////////////////wAA"></audio>
 
-  <script src="/app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
